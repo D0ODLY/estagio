@@ -1,0 +1,4 @@
+name: modulo_skibidi
+type: modulo
+description: skibid toilet á vista
+core_version_requirement: ^8 || ^9 || ^10 
