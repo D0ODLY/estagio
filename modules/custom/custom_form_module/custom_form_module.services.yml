@@ -1,0 +1,4 @@
+services:
+  custom_form_module.custom_form_service:
+    class: Drupal\custom_form_module\Service\CustomFormService
+    arguments: ['@form_builder']
