@@ -18,7 +18,7 @@ try {
     foreach ($sheet->getRowIterator() as $row) {
         $rowData = [];
         $cellIterator = $row->getCellIterator();
-        $cellIterator->setIterateOnlyExistingCells(false); // Este parâmetro permite iterar por todas as células, mesmo que estejam vazias
+        $cellIterator->setIterateOnlyExistingCells(false); 
         foreach ($cellIterator as $cell) {
             $rowData[] = $cell->getValue();
         }
