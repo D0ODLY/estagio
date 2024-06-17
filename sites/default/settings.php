@@ -733,7 +733,12 @@ $settings['container_yamls'][] = $app_root . '/' . $site_path . '/services.yml';
  * \Drupal\Component\Serialization\SerializationInterface interface.
  */
 # $settings['yaml_parser_class'] = NULL;
-
+$settings['trusted_host_patterns'] = [
+  '^localhost$',
+  '127\.0\.0\.1',
+  // Or use preg_quote() to escape the dots and other characters.
+  preg_quote('127.0.0.1'),
+];
 /**
  * Trusted host configuration.
  *
