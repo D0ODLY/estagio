@@ -1,0 +1,13 @@
+<?php
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function associates_form_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.associates_form':
+      return '<p>' . t('This module allows users to upload an Excel file and converts its content into code.') . '</p>';
+  }
+}

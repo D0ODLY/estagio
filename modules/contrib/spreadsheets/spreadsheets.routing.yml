@@ -1,0 +1,17 @@
+spreadsheets.google_sheets_config:
+  path: '/admin/config/services/googlesheets'
+  defaults:
+    _form: 'Drupal\spreadsheets\Form\GoogleSheetsConfigForm'
+    _title: 'Google Sheets settings'
+  requirements:
+    _permission: 'spreadsheets form'
+
+spreadsheets.spreadsheets_credentials:
+  path: '/admin/config/spreadsheets/spreadsheetscredentials'
+  defaults:
+    _form: '\Drupal\spreadsheets\Form\SpreadsheetsCredentials'
+    _title: 'Spreadsheets Credentials'
+  requirements:
+    _permission: 'administer site configuration'
+  options:
+    _admin_route: TRUE

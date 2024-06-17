@@ -1,0 +1,12 @@
+<?php
+
+/**
+ * @file
+ */
+
+/**
+ * Force clear cache.
+ */
+function spreadsheets_update_8001() {
+  // do nothing.
+}

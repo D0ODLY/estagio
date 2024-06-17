@@ -1,0 +1,30 @@
+{
+    "name": "drupal/spreadsheets",
+    "description": "This module provides the ability to Read Data from a google Spreadsheet.",
+    "type": "drupal-module",
+    "homepage": "https://drupal.org/project/spreadsheets",
+    "authors": [
+        {
+            "name": "Paulo Calado (kallado)",
+            "email": "paulo.calado@javali.pt",
+            "role": "Maintainer"
+        },
+        {
+            "name": "João Mauricio (jmauricio)",
+            "role": "Co-maintainer"
+        },
+        {
+            "name": "Ricardo Salvado (rsalvado)",
+            "role": "Co-maintainer"
+        }
+    ],
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/spreadsheets",
+        "source": "https://git.drupalcode.org/project/spreadsheets"
+    },
+    "license": "GPL-2.0-or-later",
+    "minimum-stability": "dev",
+    "require": {
+        "google/apiclient": "^2.0"
+    }
+}

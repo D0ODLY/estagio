@@ -1,0 +1,60 @@
+<?php
+
+/**
+ * @file
+ * Javali_sheets module .
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Function to test the correct funcionality of the module.
+ *
+ * Use drush php-eval "spreadsheets_test()" in the command line.
+ */
+function spreadsheets_test() {
+  $sheet = Drupal::service('spreadsheets_sheets.base');
+  $response = $sheet->getData();
+  print_r($response);
+  return TRUE;
+}
+
+/**
+ * @file
+ * This module provides the ability to Read Data from a google Spreadsheet.
+ */
+
+/**
+ * Implements hook_help().
+ */
+function spreadsheets_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.spreadsheets':
+      $readme = __DIR__ . '/README.md';
+      $text = file_get_contents($readme);
+      $output = '';
+
+      // If the Markdown module is installed, use it to render the README.
+      if ($text && \Drupal::moduleHandler()->moduleExists('markdown') === TRUE) {
+        $filter_manager = \Drupal::service('plugin.manager.filter');
+        $settings = \Drupal::configFactory()->get('markdown.settings')->getRawData();
+        $config = ['settings' => $settings];
+        $filter = $filter_manager->createInstance('markdown', $config);
+        $output = $filter->process($text, 'en');
+      }
+      // Else the Markdown module is not installed output the README as text.
+      elseif ($text) {
+        $output = '<pre>' . $text . '</pre>';
+      }
+
+      // Add a link to the Drupal.org project.
+      $output .= '<p>';
+      $output .= t('Visit the <a href=":project_link">Javali Spreadsheets project page</a> on Drupal.org for more information.', [
+        ':project_link' => 'https://www.drupal.org/project/spreadsheets',
+      ]);
+      $output .= '</p>';
+
+      return $output;
+  }
+
+}

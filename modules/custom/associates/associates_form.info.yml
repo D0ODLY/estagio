@@ -1,0 +1,8 @@
+name: 'Associates Form'
+type: module
+description: 'Módulo para aceitar formulários em Excel'
+core_version_requirement: ^9 || ^10
+package: Custom
+dependencies:
+- drupal:file
+- drupal:phpoffice/phpspreadsheet

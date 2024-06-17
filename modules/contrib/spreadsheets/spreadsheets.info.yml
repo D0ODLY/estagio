@@ -1,0 +1,11 @@
+name: Spreadsheets
+type: module
+description: "This module provides the ability to Read Data from a google Spreadsheet."
+package: Custom
+core_version_requirement: ^8.8 || ^9 || ^10 || ^11
+configure: spreadsheets.google_sheets_config
+
+# Information added by Drupal.org packaging script on 2024-05-13
+version: '2.0.4'
+project: 'spreadsheets'
+datestamp: 1715621306

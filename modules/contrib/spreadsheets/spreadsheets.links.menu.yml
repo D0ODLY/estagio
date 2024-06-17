@@ -1,0 +1,13 @@
+spreadsheets.spreadsheets_credentials:
+  title: 'Spreadsheets Credentials'
+  route_name: spreadsheets.spreadsheets_credentials
+  description: 'Spresheets credentials'
+  parent: system.admin_config_system
+  weight: 99
+  
+spreadsheets.spreadsheets_configuration:
+  title: 'Spreadsheets Configuration'
+  route_name: spreadsheets.google_sheets_config
+  description: 'Spresheets configuration'
+  parent: system.admin_config_services
+  weight: 99
