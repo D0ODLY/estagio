@@ -22,7 +22,7 @@ class AssociatesFormBlock extends BlockBase {
    *
    * @var \Drupal\Core\Form\FormBuilderInterface
    */
-  protected $formBuilder;
+  
 
   /**
    * Constructs a new AssociatesFormBlock instance.
@@ -36,9 +36,9 @@ class AssociatesFormBlock extends BlockBase {
    * @param \Drupal\Core\Form\FormBuilderInterface $form_builder
    *   The form builder service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, FormBuilderInterface $form_builder) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->formBuilder = $form_builder;
+    
   }
 
   /**
@@ -49,7 +49,7 @@ class AssociatesFormBlock extends BlockBase {
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('form_builder')
+      
     );
   }
 
@@ -57,7 +57,7 @@ class AssociatesFormBlock extends BlockBase {
    * {@inheritdoc}
    */
   public function build() {
-    return $this->formBuilder->getForm(AssociatesForm::class);
+    return \Drupal::formBuilder()->getForm('Drupal\associates_form\Form\AssociatesForm');
   }
 
 }
