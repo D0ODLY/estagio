@@ -4,11 +4,11 @@ namespace Drupal\associates_form\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use PhpOffice\PhpSpreadsheet\IOFactory;
+use Drupal\file\Entity\File;
+use \Drupal\file\FileInterface;  // Adicione esta linha
 
 /**
- * Defines a form that allows users to upload an Excel file.
+ * Defines a form for uploading an Excel file.
  */
 class AssociatesForm extends FormBase {
 
@@ -26,19 +26,12 @@ class AssociatesForm extends FormBase {
     $form['excel_file'] = [
       '#type' => 'file',
       '#title' => $this->t('Upload Excel file'),
-      '#description' => $this->t('Upload an Excel file to be converted into code.'),
-      '#upload_validators' => [
-        'file_validate_extensions' => ['xls xlsx'],
-      ],
-      '#required' => TRUE,
+      '#description' => $this->t('Upload an Excel file in .xls or .xlsx format.'),
     ];
 
-    $form['actions'] = [
-      '#type' => 'actions',
-    ];
-    $form['actions']['submit'] = [
+    $form['submit'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Upload'),
+      '#value' => $this->t('Submit'),
     ];
 
     return $form;
@@ -47,40 +40,40 @@ class AssociatesForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
-    $validators = ['file_validate_extensions' => ['xls xlsx']];
-    $file = file_save_upload('excel_file', $validators, FALSE, 0, FILE_EXISTS_REPLACE);
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    
+    $validators = [
+      'file_validate_extensions' => ['xls xlsx'],
+    ];
 
-    if ($file) {
-      // Move the file to the desired location and process it.
-      $directory = 'public://excel_uploads/';
-      \Drupal::service('file_system')->prepareDirectory($directory, \Drupal\Core\File\FileSystemInterface::CREATE_DIRECTORY | \Drupal\Core\File\FileSystemInterface::MODIFY_PERMISSIONS);
-      $destination = $directory . $file->getFilename();
+    
+    $file = file_save_upload('excel_file', $validators, FALSE, 0, FileSystemInterface::EXISTS_REPLACE);
 
-      try {
-        $file = \Drupal::service('file_system')->move($file->getFileUri(), $destination);
-        $file_uri = $file->getFileUri();
-
-        // Load the spreadsheet.
-        $spreadsheet = IOFactory::load($file_uri);
-        $sheetData = $spreadsheet->getActiveSheet()->toArray();
-
-        // Process the data (this is just a simple example).
-        $output = '';
-        foreach ($sheetData as $row) {
-          $output .= implode(', ', $row) . "\n";
-        }
-
-        // Output the result.
-        \Drupal::messenger()->addStatus($this->t('File processed successfully.'));
-        \Drupal::messenger()->addStatus('<pre>' . $output . '</pre>');
-      }
-      catch (FileException $e) {
-        \Drupal::messenger()->addError($this->t('Failed to upload the file.'));
-      }
-    }
-    else {
-      \Drupal::messenger()->addError($this->t('No file was uploaded.'));
+    
+    if (!$file) {
+      $form_state->setErrorByName('excel_file', $this->t('An Excel file is required.'));
+    } else {
+      // Store the uploaded file for processing in the submit handler
+      $form_state->setValue('excel_file', $file);
     }
   }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+    // Get the file object from form state
+    $file = $form_state->getValue('excel_file');
+
+    if ($file) {
+      // File upload successful
+      $file->setPermanent();
+      $file->save();
+      $this->messenger()->addMessage($this->t('File uploaded successfully.'));
+    } else {
+      // File upload failed
+      $this->messenger()->addMessage($this->t('File upload failed.'), 'error');
+    }
+  }
+
 }
