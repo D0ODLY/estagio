@@ -3,6 +3,7 @@ require 'vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 // Caminho para o ficheiro Excel de entrada
 $inputFileName = 'input.xlsx';

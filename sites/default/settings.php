@@ -686,6 +686,8 @@ $settings['update_free_access'] = FALSE;
 # ini_set('pcre.backtrack_limit', 200000);
 # ini_set('pcre.recursion_limit', 200000);
 
+ini_set('post_max_size', '128M');
+ini_set('upload_max_filesize', '128M');
 /**
  * Configuration overrides.
  *
@@ -869,6 +871,8 @@ $settings['migrate_node_migrate_type_classic'] = FALSE;
 # $settings['migrate_file_public_path'] = '';
 # $settings['migrate_file_private_path'] = '';
 
+
+
 /**
  * Load local development override configuration, if available.
  *
@@ -883,9 +887,15 @@ $settings['migrate_node_migrate_type_classic'] = FALSE;
  * Keep this code block at the end of this file to take full effect.
  */
 #
-# if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
-#   include $app_root . '/' . $site_path . '/settings.local.php';
-# }
+ #if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
+  #include $app_root . '/' . $site_path . '/settings.local.php';
+ #}
+
+$composer_autoload = DRUPAL_ROOT . '/vendor/autoload.php';
+if (file_exists($composer_autoload)) {
+    require $composer_autoload;
+}
+
 $databases['default']['default'] = array (
   'database' => 'dbdrupal',
   'username' => 'root',
